@@ -18,7 +18,7 @@ function [xM_phase, xM_init] = lskf(time_instance, measurement_inst)
         %% Time update (Before phase correction)
         [t_phase, xM_phase, ~] = avg_vel_time_update(time_instance);
         
-        %% Save model phase estimate and error          
+        %% Save predicted phase estimate and error          
         model_phase_std = [model_phase_std; find_phase_std(xM_phase)];
         phase = mean(X_std)+1;
         model_phase_est = [model_phase_est; phase];

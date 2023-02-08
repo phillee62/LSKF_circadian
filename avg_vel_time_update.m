@@ -1,6 +1,6 @@
 function [t_phase, xM_phase, xM_init] = avg_vel_time_update(time_instance)
     
-    global fun
+    global fun plotLevelSet
 
     k_noise = time_instance.k_noise; 
     light = time_instance.light;
@@ -12,6 +12,7 @@ function [t_phase, xM_phase, xM_init] = avg_vel_time_update(time_instance)
     modify_fun = time_instance.make_fun(2);
     
     try 
+        %% Propagate the system forward
         [t,y] = ode45(@(t,y)dxMdt(t,y,x_and_M,k_noise,light),tspan,x_and_M);
         minx_idx = find(y(:,1) == min(y(:,1)));
         circ_phase = y(minx_idx,:);
@@ -19,15 +20,24 @@ function [t_phase, xM_phase, xM_init] = avg_vel_time_update(time_instance)
         xM_phase = reshape(circ_phase,size(x_and_M));
         xM_init = reshape(y(numel(t),:),size(x_and_M));
         
+        %% Create or modify interpolation function            
         if new_fun && ~modify_fun
             fun = interpolate_data(t,y);  
+            beforeCorrect = 1;
+            afterCorrect = 0;
         elseif ~new_fun && modify_fun
             modify_measurement_fun(t,y);
+            beforeCorrect = 0;
+            afterCorrect = 1;
         end
+        
+        %% Plot level set on x-xc plane
+        plot_level_set(t, y, plotLevelSet, beforeCorrect, afterCorrect);
         
     catch
         t_phase = tspan(1);
         xM_phase = x_and_M;
         xM_init = x_and_M;
     end
+
 end

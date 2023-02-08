@@ -1,6 +1,6 @@
  function LSKF_circadian(dmy_hr, Thr, Tsteps, bin_size)
     
-    global model_phase_est model_phase_std fun X_std
+    global model_phase_est model_phase_std fun X_std plotLevelSet
         
     %% Open results.csv file
     fid = fopen('subject.txt');
@@ -14,10 +14,14 @@
     stp_to_act = mean(Tsteps(:,2));
     [hr_phase_est, hr_phase_std] = import_hr_phase(); % Phase estimation from HR for each day
     num_days = numel(hr_phase_est);
+    
+    %% Determine whether or not to plot level set
+    plotLevelSet = 1;
 
     %% Initialize variables and initial conditions 
     x_init = [1;0;0.5]; 
-    covariance_init = diag([0.1,0.1,0.1]);  
+%     covariance_init = diag([0.1,0.1,0.1]);  
+    covariance_init = diag([0.01,0.01,0.01]);  
 
     M_init = chol(covariance_init).'; 
     dim = length(covariance_init);
@@ -53,6 +57,7 @@
     
     %% Iterate for each day
     for i = 1:num_days
+        
         %% If there is no steps data, make covariance matrix for the next day bigger
         [~, steps_data] = bin_data(raw_hr_data, raw_steps_data, bin_size, i);
         if isempty(steps_data)
@@ -72,10 +77,9 @@
             steps = steps_data(:,2);
             light = convert_steps_to_light(steps, stp_to_act);   
             time_interval = [(i-1)*24*60:1:(i*24*60)]./60;             
-            k_observe = hr_phase_std(i)^2; % Measurement noise (from HR phase)
+            k_observe = hr_phase_std(i)^2; % Measurement noise (from ALSM)
             make_fun = [1,0]; % first entry used to make new interpolation function
-                              % second entry used to adjust existing
-                              % interpolation function
+                              % second entry used to adjust existing interpolation function after correction
             
             %% Compute raw model output for comparison with LSKF output
             raw_model_time_inst = time_update_instance.define_instance(k_noise,dim,time_interval,light,raw_model_x_init,raw_model_M_init,make_fun_raw);
@@ -92,7 +96,7 @@
             time_instance = time_update_instance.define_instance(k_noise, dim, time_interval, light, x_init, M_init, make_fun);
             measurement_inst = measurement_instance.define(k_observe,time_interval,hr_phase_est(i));
             
-            %% Implement Level Set Kalman Filter
+            %% Implement the Level Set Kalman Filter
             [xM_phase, xM_init] = lskf(time_instance, measurement_inst);
 
             %% Save output, setup for subsequent iteration

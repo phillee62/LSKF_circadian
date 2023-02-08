@@ -2,7 +2,7 @@
 clc; clear; close all;
 
 %% Load the subject file to get the timezone -- This is to run data on WDAP
-fid = fopen('subject.txt');
+fid = fopen('real_data/subject.txt');
 tline = fgetl(fid);
 sub_file = cell(0,1);
 while ischar(tline)
@@ -27,7 +27,7 @@ catch
 end
 
 try
-    Thr = readtable('heart_rate.csv','Delimiter', ',');
+    Thr = readtable('real_data/heart_rate.csv','Delimiter', ',');
     Thr = table2array(Thr(:,1:2));
     Thr(:,1) = Thr(:,1)/(24*60*60) + ref_date + t_offset;
 catch
@@ -35,7 +35,7 @@ catch
 end
 
 try
-    Tsteps = readtable('steps.csv', 'Delimiter', ',');
+    Tsteps = readtable('real_data/steps.csv', 'Delimiter', ',');
     Tsteps = table2array(Tsteps(:,1:2));
     Tsteps(:,1) = Tsteps(:,1)/(24*60*60) + ref_date + t_offset;
     isEmptySteps = 0;
@@ -45,7 +45,7 @@ catch
 end
 
 try
-    Tsleep = readtable('sleep.csv', 'Delimiter', ',');
+    Tsleep = readtable('real_data/sleep.csv', 'Delimiter', ',');
     Tsleep = table2array(Tsleep(:,1:2));
     Tsleep(:,1) = Tsleep(:,1)/(24*60*60) + ref_date + t_offset;
     isEmptySleep = 0;
