@@ -33,7 +33,7 @@ visualiation: Visualization of the level set ellipsoids on x,xc plane are plotte
 hr_phase_result.csv: This is the .csv output file from LSM_hr_estimator_v9.m that contains information about heart rate phase, heart rate phase uncertainty, and heart rate circadian rhythm paramters.
 
 result.csv: This is the main result file that from the LSKF_circadian.m. Each column corresponds to the date of the data collection. The columns contain information about the 
-    • corrected circadian phase and uncertainty of the master clock (i.e., after the measurement-update step) 
-    • predicted circadian phase and uncertainty of the master clock (i.e., before the measurement-update step) 
-    • phase estimates and uncertainty of the heart rate circadian clock (same as in hr_phase_result.csv)
-    • estimated circadian phase and uncertainty of the master clock solely based on the mathematical model and level set method (i.e., result without measurement-update step).
+• corrected circadian phase and uncertainty of the master clock (i.e., after the measurement-update step) 
+• predicted circadian phase and uncertainty of the master clock (i.e., before the measurement-update step) 
+• phase estimates and uncertainty of the heart rate circadian clock (same as in hr_phase_result.csv)
+• estimated circadian phase and uncertainty of the master clock solely based on the mathematical model and level set method (i.e., result without measurement-update step).
