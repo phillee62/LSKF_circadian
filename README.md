@@ -30,7 +30,7 @@ sleep.csv: A two column array like the heart rate data, but the second column de
 ### Output files
 visualiation: Visualization of the level set ellipsoids on x,xc plane are plotted for each day. Blue ellipsoids correspond to the propagation before the correction (i.e., during the time-update step). Red ellipsoids correspond to the propagation after the correction (i.e., after the measurement-update step). Set varialbe "plotLevelSet" as 0 to turn off visaulizations.
 
-hr_phase_result.csv: This is the .csv output file from LSM_hr_estimator_v9.m that contains information about heart rate phase, heart rate phase uncertainty, and heart rate circadian rhythm paramters.
+hr_phase_result.csv: This is the .csv output file from bayes_hr_estimator.m that contains information about heart rate phase, heart rate phase uncertainty, and heart rate circadian rhythm paramters.
 
 result.csv: This is the main result file that from the LSKF_circadian.m. Each column corresponds to the date of the data collection. The columns contain information about the 
 • corrected circadian phase and uncertainty of the master clock (i.e., after the measurement-update step) 
