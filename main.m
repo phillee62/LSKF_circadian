@@ -58,8 +58,8 @@ if(~isEmptySleep)
     Thr = remove_sleep(Thr, Tsleep);
 end
 if(~isEmptySteps)
-    %% Run Heart rate Algorithm
-    dmy_hr = LSM_hr_estimator_v9(Thr, Tsteps, bin_size);
+    %% Run Heart rate Algorithm (Bowman et al., 2021)
+    dmy_hr = bayes_hr_estimator(Thr, Tsteps, bin_size);
     
     %% Execute the main algorithm
     LSKF_circadian(dmy_hr, Thr, Tsteps, bin_size);

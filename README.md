@@ -6,7 +6,7 @@
 ### Computer codes
 main.m: This is the main execution file for analyzing the wearable heart rate and activity data to estimate the circadian phase and its uncertainty of the master circadian pacemaker.
 
-LSM_hr_estimator_v9.m: This function applies the approximation-based least squares method to wearable data to obtain the circadian phase and uncertainty of heart rate circadian clock (Kim and Mayer et al., 2023). 
+bayes_hr_estimator.m: This function applies the Monte-Carlo Markov chain method to wearable data to obtain the circadian phase and uncertainty of heart rate circadian clock (Bowman et al., 2021). 
 
 LSKF_circadian.m: This is the main function that does preprocessing, sets up for the implementation of the Level Set Kalman Filter (LSKF), and saves the result.
 
