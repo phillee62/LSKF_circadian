@@ -1,4 +1,4 @@
-function dmy_hr =  bayes_hr_estimator_copy(hr_data, steps_data, bin_size, ii)
+function dmy_hr =  bayes_hr_estimator(hr_data, steps_data, bin_size)
 
 %% Close figures
 
@@ -55,7 +55,7 @@ phases = [];
 
 % Open results.csv file and add a header line
 
-results_file = fopen(strcat('hr_phase_results_', num2str(ii),'.csv'), 'w');
+results_file = fopen('hr_phase_results.csv', 'w');
 fprintf(results_file, 'Date (dd-mmm-yyyy), Horizontal Shift (Phase Estimate-Raw), Phase Estimate (Time), STD of phsae, Number of data points, Daily step count \n');
 
 %% Process data
@@ -92,10 +92,10 @@ num_days = length(dmy_hr)-2;
 
 %% Main loop
 
-l = 1
+l = 1;
 
 for i = 1:num_days
-    i
+%     i
     % Load steps information for that day
     
     steps_times = steps_dates(steps_dates>=dmy_hr(i) & steps_dates < dmy_hr(i+2));
